@@ -1,0 +1,31 @@
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://example.com/demo/schemas" elementFormDefault="qualified" targetNamespace="http://example.com/demo/schemas">
+   <s:element name="GetPolicyRequest" nillable="true" type="tns:GetPolicyRequest" />
+   <s:complexType name="GetPolicyRequest">
+      <s:sequence>
+         <s:element maxOccurs="1" minOccurs="1" name="PolicyNumber" type="s:string" />
+      </s:sequence>
+   </s:complexType>
+   <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader" />
+   <s:complexType name="AuthenticationHeader">
+      <s:sequence>
+         <s:element maxOccurs="1" minOccurs="1" name="UserName" type="s:string" />
+         <s:element maxOccurs="1" minOccurs="1" name="Password" type="s:string" />
+      </s:sequence>
+      <s:anyAttribute />
+   </s:complexType>
+   <s:complexType name="Exception">
+      <s:sequence>
+         <s:element maxOccurs="1" minOccurs="0" name="ErrorMessage" type="s:string" />
+      </s:sequence>
+   </s:complexType>
+   <s:element name="GetPolicyResponse" nillable="true" type="tns:GetPolicyResponse" />
+   <s:complexType name="GetPolicyResponse">
+      <s:sequence>
+         <s:element maxOccurs="1" minOccurs="0" name="PolicyHoderName" type="s:string" />
+         <s:element maxOccurs="1" minOccurs="0" name="PolicyNumber" type="s:string" />
+         <s:element maxOccurs="1" minOccurs="0" name="MaturityDate" type="s:string" />
+         <s:element maxOccurs="1" minOccurs="0" name="PremiumAmount" type="s:string" />
+         <s:element maxOccurs="1" minOccurs="0" name="Exception" nillable="true" type="tns:Exception" />
+      </s:sequence>
+   </s:complexType>
+</s:schema>

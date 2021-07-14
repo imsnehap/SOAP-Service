@@ -1,0 +1,133 @@
+
+<wsdl:definitions
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://example.com/demo/schemas"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:tns="http://example.com/demo/schemas"
+	targetNamespace="http://example.com/demo/schemas">
+	<wsdl:types>
+		<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified"
+			targetNamespace="http://example.com/demo/schemas">
+			<s:element name="GetPolicyRequest" nillable="true"
+				type="tns:GetPolicyRequest" />
+			<s:complexType name="GetPolicyRequest">
+				<s:sequence>
+					<s:element maxOccurs="1" minOccurs="1"
+						name="PolicyNumber" type="s:string" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="AuthenticationHeader"
+				type="tns:AuthenticationHeader" />
+			<s:complexType name="AuthenticationHeader">
+				<s:sequence>
+					<s:element maxOccurs="1" minOccurs="1" name="UserName"
+						type="s:string" />
+					<s:element maxOccurs="1" minOccurs="1" name="Password"
+						type="s:string" />
+				</s:sequence>
+				<s:anyAttribute />
+			</s:complexType>
+			<s:complexType name="Exception">
+				<s:sequence>
+					<s:element maxOccurs="1" minOccurs="0"
+						name="ErrorMessage" type="s:string" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="GetPolicyResponse" nillable="true"
+				type="tns:GetPolicyResponse" />
+			<s:complexType name="GetPolicyResponse">
+				<s:sequence>
+					<s:element maxOccurs="1" minOccurs="0"
+						name="PolicyHoderName" type="s:string" />
+					<s:element maxOccurs="1" minOccurs="0"
+						name="PolicyNumber" type="s:string" />
+					<s:element maxOccurs="1" minOccurs="0"
+						name="MaturityDate" type="s:string" />
+					<s:element maxOccurs="1" minOccurs="0"
+						name="PremiumAmount" type="s:string" />
+					<s:element maxOccurs="1" minOccurs="0" name="Exception"
+						nillable="true" type="tns:Exception" />
+				</s:sequence>
+			</s:complexType>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="GetPolicyRequest">
+		<wsdl:part element="tns:GetPolicyRequest"
+			name="GetPolicyRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetPolicyResponse">
+		<wsdl:part element="tns:GetPolicyResponse"
+			name="GetPolicyResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GetPolicyAuthenticationHeader">
+		<wsdl:part name="AuthenticationHeader"
+			element="tns:AuthenticationHeader" />
+	</wsdl:message>
+	<wsdl:portType name="SOAPProviderPort">
+		<wsdl:operation name="GetPolicy">
+			<wsdl:input message="tns:GetPolicyRequest"
+				name="GetPolicyRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:GetPolicyResponse"
+				name="GetPolicyResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SOAPProviderPortSoap12"
+		type="tns:SOAPProviderPort">
+		<soap12:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="GetPolicy">
+			<soap12:operation
+				soapAction="http://example.com/demo/schemas/GetPolicy" />
+			<wsdl:input name="GetPolicyRequest">
+				<soap12:body use="literal" />
+				<soap12:header
+					message="tns:GetPolicyAuthenticationHeader"
+					part="AuthenticationHeader" use="literal" />
+			</wsdl:input>
+			<wsdl:output name="GetPolicyResponse">
+				<soap12:body use="literal" />
+				<soap12:header
+					message="tns:GetPolicyAuthenticationHeader"
+					part="AuthenticationHeader" use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="SOAPProviderPortSoap11"
+		type="tns:SOAPProviderPort">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="GetPolicy">
+			<soap:operation
+				soapAction="http://example.com/demo/schemas/GetPolicy" />
+			<wsdl:input name="GetPolicyRequest">
+				<soap:body use="literal" />
+				<soap:header message="tns:GetPolicyAuthenticationHeader"
+					part="AuthenticationHeader" use="literal" />
+
+			</wsdl:input>
+			<wsdl:output name="GetPolicyResponse">
+				<soap:body use="literal" />
+				<soap:header message="tns:GetPolicyAuthenticationHeader"
+					part="AuthenticationHeader" use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SOAPProvider">
+		<wsdl:port binding="tns:SOAPProviderPortSoap12"
+			name="SOAPProviderPortSoap12">
+			<soap12:address
+				location="http://localhost:8084/SOAPProvider" />
+		</wsdl:port>
+		<wsdl:port binding="tns:SOAPProviderPortSoap11"
+			name="SOAPProviderPortSoap11">
+			<soap:address
+				location="http://localhost:8084/SOAPProvider" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
